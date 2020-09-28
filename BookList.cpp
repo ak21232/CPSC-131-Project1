@@ -163,7 +163,7 @@ std::istream & operator>>( std::istream & stream, BookList & bookList )
 BookList::BookList(const std::size_t & newSize)
 {
   _capacity = newSize;
-  _bookArray = new Book[_books_array_size];
+  _bookArray = new Book[_capacity];
 
 }
 
@@ -173,11 +173,17 @@ BookList::BookList(const std::size_t & newSize)
 // TO DO
 BookList & BookList::operator+=( const BookList & rhs)
 {
-  //while (_capacity <= rhs.size())
-  //{
-    //;
-  //}
-
+  if (rhs.size() <= _capacity)
+  {
+    for (int i = this->size() + 1; i <= _capacity; i++)
+    {
+      for (int j = 0; j < rhs.size(); j++)
+      {
+        _bookArray[i] = rhs[j];
+      }
+    }
+  }
+  return *this;
   // Concatenate the righthand side book list of books to this list
   // by repeatedly adding each book at the end of the current book list
   // as long as it does not exceed <_capacity>
@@ -209,20 +215,14 @@ std::size_t BookList::find( const Book & book ) const
 // of that book. If the book does not exist, return the size of this
 // book list as an indicator the book does not exist.
 {
-  int location = 0;
   for (int i = 0; i < _books_array_size; i++)
   {
     if (_bookArray[i] == book)
     {
-      location = i;
-      break;
-    }
-    else
-    {
-      location = _books_array_size;
+      return i;
     }
   }
-  return location;
+  return _books_array_size;
 }
 
 Book BookList::operator[](std::size_t index) const {
