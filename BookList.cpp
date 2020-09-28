@@ -162,7 +162,9 @@ std::istream & operator>>( std::istream & stream, BookList & bookList )
 // TO DO
 BookList::BookList(const std::size_t & newSize)
 {
-  _bookArray = new Book[newSize];
+  _capacity = newSize;
+  _bookArray = new Book[_books_array_size];
+
 }
 
 /************************
@@ -171,10 +173,10 @@ BookList::BookList(const std::size_t & newSize)
 // TO DO
 BookList & BookList::operator+=( const BookList & rhs)
 {
-  while (_capacity <= rhs.size())
-  {
-    insert(_books_array_size, rhs.);
-  }
+  //while (_capacity <= rhs.size())
+  //{
+    //;
+  //}
 
   // Concatenate the righthand side book list of books to this list
   // by repeatedly adding each book at the end of the current book list
@@ -188,10 +190,8 @@ BookList & BookList::operator+=( const BookList & rhs)
 // TO DO
 BookList::~BookList()
 {
-  if(_bookArray != nullptr)
-  {
-    delete _bookArray;
-  }
+  delete [] _bookArray;
+  _books_array_size = 0;
 }
 
 /***********************
@@ -210,7 +210,7 @@ std::size_t BookList::find( const Book & book ) const
 // book list as an indicator the book does not exist.
 {
   int location = 0;
-  for (int i = 0; i < _capacity; i++)
+  for (int i = 0; i < _books_array_size; i++)
   {
     if (_bookArray[i] == book)
     {
@@ -219,7 +219,7 @@ std::size_t BookList::find( const Book & book ) const
     }
     else
     {
-      location = book.size();
+      location = _books_array_size;
     }
   }
   return location;
