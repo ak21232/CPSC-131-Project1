@@ -175,7 +175,7 @@ BookList::BookList(const std::size_t & newSize)
 BookList & BookList::operator+=( const BookList & rhs)
 {
   unsigned i=0; //Initialize counter variable
-  while ((i < rhs._books_array_size) && (i < _capacity)) //Conditions for loop
+  while ((i < rhs._books_array_size) && (this->_books_array_size < _capacity)) //Conditions for loop
   {
     this->_bookArray[this->_books_array_size] = rhs._bookArray[i];
     //Add book from rhs._bookArray at postion i to _bookArray
