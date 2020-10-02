@@ -163,7 +163,7 @@ std::istream & operator>>( std::istream & stream, BookList & bookList )
 BookList::BookList(const std::size_t & newSize)
 {
   _capacity = newSize;
-  _books_array_size = 30;
+  _books_array_size = 0;
   _bookArray = new Book[_capacity];
 
 }
@@ -174,13 +174,14 @@ BookList::BookList(const std::size_t & newSize)
 // TO DO
 BookList & BookList::operator+=( const BookList & rhs)
 {
-  if (rhs._capacity < _capacity)
+  unsigned i=0; //Initialize counter variable
+  while ((i < rhs._books_array_size) && (i < _capacity)) //Conditions for loop
   {
-    for (int i = 0; i < rhs._books_array_size; i++)
-    {
-      _bookArray[(_capacity - _books_array_size) + i] = rhs._bookArray[i];
-    }
+    _bookArray[_books_array_size + i] = rhs._bookArray[i];
+    //Add book from rhs._bookArray at postion i to _bookArray
+    i++; //Increase iteration
   }
+
   return *this;
 
   // Concatenate the righthand side book list of books to this list
@@ -196,7 +197,6 @@ BookList & BookList::operator+=( const BookList & rhs)
 BookList::~BookList()
 {
   delete [] _bookArray;
-  _books_array_size = 0;
   _capacity = 0;
 }
 
@@ -215,14 +215,14 @@ std::size_t BookList::find( const Book & book ) const
 // of that book. If the book does not exist, return the size of this
 // book list as an indicator the book does not exist.
 {
-  for (int i = 0; i < _books_array_size; i++)
+  for (int i = 0; i < _books_array_size; i++) //Loop through _bookArray
   {
-    if (_bookArray[i] == book)
+    if (_bookArray[i] == book) //Use class 'book' operator== to compare
     {
-      return i;
+      return i; //Match returns index
     }
   }
-  return _books_array_size;
+  return _books_array_size; //No match returns array size
 }
 
 Book BookList::operator[](std::size_t index) const {
