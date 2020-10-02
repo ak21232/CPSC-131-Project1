@@ -162,9 +162,9 @@ std::istream & operator>>( std::istream & stream, BookList & bookList )
 // TO DO
 BookList::BookList(const std::size_t & newSize)
 {
-  _capacity = newSize;
-  _books_array_size = 0;
-  _bookArray = new Book[_capacity];
+  _bookArray = new Book[newSize]; // Dynamically allocate memory for array
+  _capacity = newSize; // Set _capacity to input parameter
+  _books_array_size = 0; // Initialize _books_array_size
 
 }
 
@@ -177,7 +177,7 @@ BookList & BookList::operator+=( const BookList & rhs)
   unsigned i=0; //Initialize counter variable
   while ((i < rhs._books_array_size) && (i < _capacity)) //Conditions for loop
   {
-    _bookArray[_books_array_size + i] = rhs._bookArray[i];
+    this->_bookArray[this->_books_array_size + i] = rhs._bookArray[i];
     //Add book from rhs._bookArray at postion i to _bookArray
     i++; //Increase iteration
   }
@@ -196,8 +196,7 @@ BookList & BookList::operator+=( const BookList & rhs)
 // TO DO
 BookList::~BookList()
 {
-  delete [] _bookArray;
-  _capacity = 0;
+  delete [] _bookArray; // Delete dynamic array
 }
 
 /***********************
